@@ -1,0 +1,7 @@
+Adding Data (Recommended Order)
+
+Add Subjects first (e.g., "CS101 - Programming")
+Add Students (includes personal info from Person)
+Add Enrollments (link students to subjects)
+Add Attendance records for each enrollment
+Add Academic Records (grades) for each enrollment

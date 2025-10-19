@@ -1,0 +1,12 @@
+# Install Django
+pip install django
+
+# Create project and app
+django-admin startproject student_info_system .
+python manage.py startapp sis_app
+
+# Copy the provided files, then:
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py runserver
