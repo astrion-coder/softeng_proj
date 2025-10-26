@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import date
+from django.contrib.auth.hashers import make_password, check_password
 
 class Person(models.Model):
     person_id = models.AutoField(primary_key=True)
@@ -22,6 +23,8 @@ class Person(models.Model):
         return f"{self.first_name} {self.last_name}"
 
 
+from django.contrib.auth.hashers import make_password, check_password
+
 class Student(Person):
     """Generalization: Student IS A Person"""
     reg_no = models.CharField(max_length=20, unique=True, primary_key=True)
@@ -33,8 +36,37 @@ class Student(Person):
     sgpa = models.DecimalField(max_digits=4, decimal_places=2, null=True, blank=True)
     cgpa = models.DecimalField(max_digits=4, decimal_places=2, null=True, blank=True)
     
+    password_hash = models.CharField(max_length=128, blank=True)
+    must_change_password = models.BooleanField(default=False)
+
+    def set_password(self, raw_password):
+        """
+        Student changes their own password.
+        Hashes the password and marks must_change_password=False.
+        Saves immediately.
+        """
+        self.password_hash = make_password(raw_password)
+        self.must_change_password = False
+        self.save(update_fields=['password_hash', 'must_change_password'])
+
+    def set_password_admin_default(self, raw_password):
+        """
+        Admin sets default password for a new student.
+        Hashes the password and marks must_change_password=True.
+        """
+        self.password_hash = make_password(raw_password)
+        self.must_change_password = True
+
+
+    def check_password(self, raw_password):
+        """Verify a raw password against the stored hash."""
+        if not self.password_hash:
+            return False
+        return check_password(raw_password, self.password_hash)
+
     def __str__(self):
         return f"{self.reg_no} - {self.first_name} {self.last_name}"
+
 
 
 class Subject(models.Model):

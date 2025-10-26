@@ -15,9 +15,10 @@ class PersonAdmin(admin.ModelAdmin):
 
 @admin.register(Student)
 class StudentAdmin(admin.ModelAdmin):
-    list_display = ('reg_no', 'first_name', 'last_name', 'roll_no', 'batch', 'degree', 'semester', 'sgpa', 'cgpa')
+    list_display = ('reg_no', 'first_name', 'last_name', 'roll_no', 'batch', 'degree', 'semester', 'sgpa', 'cgpa', 'must_change_password')
     search_fields = ('reg_no', 'roll_no', 'first_name', 'last_name')
     list_filter = ('batch', 'degree', 'semester')
+    readonly_fields = ('password_hash',)  # admin can't see/change the password directly
     fieldsets = (
         ('Personal Information', {
             'fields': ('first_name', 'last_name', 'date_of_birth')
@@ -26,6 +27,11 @@ class StudentAdmin(admin.ModelAdmin):
             'fields': ('reg_no', 'roll_no', 'batch', 'degree', 'course', 'semester', 'sgpa', 'cgpa')
         }),
     )
+
+    def save_model(self, request, obj, form, change):
+        if not change:  # Only for new students
+            obj.set_password_admin_default("default123")  # just sets fields
+            super().save_model(request, obj, form, change)  # actually saves to DB
 
 
 @admin.register(Subject)
