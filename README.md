@@ -54,3 +54,9 @@ Team Memebers:
 
 Initially no user will be present in the database. For that, the admin first needs to fill some sample data into the database using the django admin panel. It is recommended to fill the tables in the order mentioned in the file data_adding_order.txt because the tables are dependent on each other. After filling the sample data, the user can login in the sis_gui.py using the reg no filled in the django admin panel. For the first time, the default password is default123. After this, a window will automatically open prompting the user to change their default password. After that, the sis_gui.py can be used normally.
 
+8. (Optional) Run the tests. 
+
+   ```
+   pytest
+   ```
+   
