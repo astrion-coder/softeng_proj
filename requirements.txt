@@ -1,0 +1,5 @@
+# requirements.txt
+
+django>=4.2,<5.1
+pytest>=8.0
+pytest-django>=4.8
