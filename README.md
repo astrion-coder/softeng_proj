@@ -1,11 +1,5 @@
 # Software Engineering Project
 
-Team Memebers:
-1. Debraj Bose - 895
-2. Iman Kalyan Chakraborty - 901
-3. Om Chatterjee - 916
-4. Prachi Das - 917
-
 # Instructions To Run
 __IMPORTANT:__ This code was run using python 3.11.9. Any other version later than that is not recommended.
 
